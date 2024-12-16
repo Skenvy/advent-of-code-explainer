@@ -80,9 +80,21 @@ jobs:
       actions: read
       contents: read
       security-events: write
-    uses: ./.github/workflows/github-codeql.yaml
-    with:
-      language: 'python'
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🏁 Checkout
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    - name: 🛡👨‍💻🛡 Init CodeQL
+      uses: github/codeql-action/init@f09c1c0a94de965c15400f5634aa42fac8fb8f88 # v3.27.5
+      with:
+        languages: python
+        queries: +security-extended,security-and-quality
+    - name: 🛠 Autobuild
+      uses: github/codeql-action/autobuild@f09c1c0a94de965c15400f5634aa42fac8fb8f88 # v3.27.5
+    - name: 🛡👨‍💻🛡 Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@f09c1c0a94de965c15400f5634aa42fac8fb8f88 # v3.27.5
+      with:
+        category: "/language:python"
   docs:
     name: Docs 📄 Quick Test 🦂
     runs-on: ubuntu-latest
