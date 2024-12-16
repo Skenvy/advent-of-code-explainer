@@ -51,12 +51,6 @@ clean clean_again:
 	rm  -f flake8.log
 	rm -rf docs/build/
 
-# http://localhost:44449/
-# http://localhost:44449/src.advent_of_code_explainer.html
-.PHONY: pydoc_server
-pydoc_server:
-	$(VE) python -m pydoc -b
-
 .PHONY: verify_built_checkin
 verify_built_checkin: clean
 	$(VE) $(SPHINX_BUILD_SOURCE)

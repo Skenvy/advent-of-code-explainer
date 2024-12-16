@@ -1,6 +1,4 @@
 # [advent-of-code-explainer](https://github.com/Skenvy/advent-of-code-explainer)
-
----
 TODO SHORT DESCRIPTION
 ## Getting Started
 [To install the latest from pypi](https://pypi.org/project/advent-of-code-explainer/);
