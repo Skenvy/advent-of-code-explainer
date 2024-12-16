@@ -8,13 +8,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "advent-of-code-explainer"
 dynamic = ["version"]
+description = 'An "explainer" app for "Advent of Code" puzzles.'
+requires-python = ">=3.10"
 authors = [
     {name = "Skenvy", email = "nathan.a.z.levett@gmail.com"},
 ]
 maintainers = [
     {name = "Skenvy", email = "nathan.a.z.levett@gmail.com"},
 ]
-description = 'An "explainer" app for "Advent of Code" puzzles.'
 readme = "README.md"
 license = {file = "LICENSE"}
 keywords = [
@@ -37,7 +38,7 @@ GitHub = "https://github.com/Skenvy/advent-of-code-explainer"
 PyPI = "https://pypi.org/project/advent-of-code-explainer/"
 
 [tool.setuptools.dynamic]
-version = {attr = "my_package.__version__"}
+version = {attr = "advent_of_code_explainer.__version__"}
 
 [tool.pytest.ini_options]
 addopts = "-r a -v -W ignore::DeprecationWarning"

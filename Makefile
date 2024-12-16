@@ -5,10 +5,11 @@ PIP_PIP=pip install --upgrade pip==$(PIP_VERSION)
 PIP_REQ=pip install --upgrade -r
 VENV_REQS=requirements-venv.txt
 FROZEN_VENV_REQS=requirements-venv-frozen.txt
-TEST=pytest
-TOX=tox
+WITH_INSTALLED_EDITABLE=pip install --editable . &&
+TEST=$(WITH_INSTALLED_EDITABLE) pytest
+TOX=$(WITH_INSTALLED_EDITABLE) tox
 
-LINT_FOLDERS=src tests .demo/_
+LINT_FOLDERS=src tests
 PYLINT=pylint --recursive=y --disable=C,R,I --enable=F,E,W --output-format=colorized,text:pylint.log --msg-template='{C} {path}:{line}:{column}: {msg_id}: {msg} ({symbol})' $(LINT_FOLDERS)
 FLAKE8=flake8 --color=always -vv --output-file=flake8.log $(LINT_FOLDERS)
 
