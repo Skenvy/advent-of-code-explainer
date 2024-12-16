@@ -20,3 +20,6 @@ exclude =
     # The setup script does not need to be linted
     setup.py
 per-file-ignores =
+    # 'imported but unused' & 'unable to detect undefined names'
+    src/advent_of_code_explainer/__init__.py: F401,F403
+    src/advent_of_code_explainer/puzzles/year_2024/__init__.py: F401,F403
