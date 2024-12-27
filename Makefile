@@ -54,7 +54,7 @@ clean clean_again:
 .PHONY: verify_built_checkin
 verify_built_checkin: clean
 	$(VE) $(SPHINX_BUILD_SOURCE)
-	$(VERIFY_BUILT_MSG)
+	@$(VERIFY_BUILT_MSG)
 	$(VERIFY_BUILT_ERR)
 
 # https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html
