@@ -1,3 +1,7 @@
+################################################################################
+# https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
+################################################################################
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -124,6 +128,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+.ve
 env/
 venv/
 ENV/
