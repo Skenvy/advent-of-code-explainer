@@ -1,6 +1,6 @@
 def solve_one(number):
-    return number + 1
+    return number + 3
 
 
 def solve_two(number):
-    return number + 2
+    return number + 4
