@@ -16,9 +16,6 @@ defaults:
 env:
   development_python_version: 3.12.3
 jobs:
-  context:
-    name: GitHub 🐱‍👤 Context 📑
-    uses: ./.github/workflows/github-context.yaml
   test:
     name: Test 🦂
     permissions:
