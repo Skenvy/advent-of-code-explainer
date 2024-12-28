@@ -1,10 +1,15 @@
 # [Devlog](https://github.com/Skenvy/advent-of-code-explainer/blob/main/devlog.md)
-[Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) changes very frequently so check it just to see whats current.
-[Configuring setuptools using `pyproject.toml` files](https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html)
-[Writing your `pyproject.toml`](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)
-[Project Metadata: Project URLs](https://docs.pypi.org/project_metadata/#project-urls)
+This is the beginning of development on a WIP+PoC test to deploy a python package on PyPI and create a static site (via pelican probably) that utilises pyscript to run the package in the browser. Specifically, this will be done with a toy package centred on "advent of code solving" -- the [Advent of Code](https://adventofcode.com/) is an annual fun code challenge exercise, done as an advent calender, so every December. Of course, part of the fun is finding something to use it as an excuse to learn, beyond the scope of just solving the actual puzzles.
+
+This year I've decided to use Advent of Code as an excuse to play around with publishing a pypi package and then using it in a static site that loads pyscript.
+
+[Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) changes very frequently so check it just to see whats current, since the last one I did.
+[Configuring setuptools using `pyproject.toml` files](https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html).
+[Writing your `pyproject.toml`](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/).
+[Project Metadata: Project URLs](https://docs.pypi.org/project_metadata/#project-urls).
 
 ## Empty Orphans `gh-pages-*`
+I'll just reuse my established pattern for having multiple things in a repo build and contribute their own pages to a `gh-pages` deployment. My method is having a deployment of pages run on an artifact built from a `gh-pages` branch, after that branch has had any one of several "sub pages" merged to it. Although many applications or tools provide very concise easy and simple methods for publishing _their own output_ to `gh-pages` branch (often geared towards gh's default jekyll build) it is not common for them to have capabilities for publishing to only sub-pages. Start with creating the empty orphans we later push to and merge between. We only have two this time round, one for the "package" pages (which will be built by sphinx) and one for the "pyscript / pelican" pages.
 ```sh
 git checkout --orphan gh-pages
 rm .git/index ; git clean -fdx
