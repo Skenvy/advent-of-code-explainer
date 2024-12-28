@@ -55,3 +55,6 @@ needed by Pelican.
 > Is this your personal page (username.github.io)? (y/N) n
 Done. Your new project is available at (here)
 ```
+
+## pyscript
+Of course, although we will (probably) be using pelican to build the site, I already followed the pyscript initial steps earlier before deciding to do this, and found a [blog post of someone else experimenting with this](https://www.castoriscausa.com/posts/2023/05/13/pyscript_toy_example/), so I know it's doable. Although, by doing the pyscript stuffed inside pelican config, it might not be the clearest what's happening.
