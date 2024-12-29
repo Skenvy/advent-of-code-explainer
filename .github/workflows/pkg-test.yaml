@@ -44,7 +44,7 @@ jobs:
     - name: 🧹 Lint
       run: make lint
     - name: ⚖ Does the checked source match the built result? 
-      run: make verify_built_checkin
+      run: make verify_sphinx_checkin
   full-test:
     name: Full Test 🦂
     if: >- 
@@ -70,7 +70,7 @@ jobs:
     - name: 🧹 Lint
       run: make lint
     - name: ⚖ Does the checked source match the built result? 
-      run: make verify_built_checkin
+      run: make verify_sphinx_checkin
   codeql:
     name: CodeQL 🛡👨‍💻🛡
     if: >- 
