@@ -50,7 +50,6 @@ serve: generate
 publish: clean_this
 	$(VE) "$(PELICAN)" "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(PUBLISHCONF)" $(PELICANOPTS)
 
-
 VERIFY_PELICAN_MSG=echo "Exit if a change to the built Pelican output is not committed"
 VERIFY_PELICAN_ERR=git add output && git diff --exit-code --cached --stat -- output/
 

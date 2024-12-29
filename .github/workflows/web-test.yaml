@@ -1,0 +1,101 @@
+name: Web 📄 Tests 🦂
+on:
+  push:
+    branches-ignore:
+    - 'main'
+    paths:
+    - 'web/**'
+    - '!web/**.md'
+    - '.github/workflows/web-*'
+  pull_request:
+    branches:
+    - 'main'
+    paths:
+    - 'web/**'
+    - '!web/**.md'
+    - '.github/workflows/web-*'
+  schedule: # 9AM on the 15th
+  - cron: 0 22 14 1,2,3,10,11,12 * # AEDT Months
+  - cron: 0 23 14 4,5,6,7,8,9 *    # AEST Months
+  workflow_call:
+permissions: {}
+defaults:
+  run:
+    shell: bash
+    working-directory: web
+env:
+  development_python_version: 3.12.3
+jobs:
+  quick-test:
+    name: Quick Test 🦂
+    if: ${{ github.event_name == 'push' && !(github.event.ref == 'refs/heads/main') }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🏁 Checkout
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+      with:
+        python-version: ${{ env.development_python_version }}
+    - name: 🧱 Install build dependencies
+      run: make setup
+    # - name: 🦂 Test with pytest
+    #   run: make test
+    # - name: 🧹 Lint
+    #   run: make lint
+    - name: ⚖ Does the checked-in Pelican output match the built result?
+      run: make verify_pelican_checkin
+  # TODO: Use full test to test the python files that will be built into
+  # the pelican site across multiple pyodide versions or something?
+  # https://github.com/pyodide/pytest-pyodide
+  full-test:
+    name: Full Test 🦂
+    if: >- 
+      ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && github.event.ref == 'refs/heads/main') }}
+    runs-on: '${{ matrix.os }}'
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.12']
+        os: [ubuntu-latest, macOS-latest]
+    steps:
+    - name: 🏁 Checkout
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    - name: 🐍 Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: 🧱 Install build dependencies
+      run: make setup
+    # - name: 🦂 Test with tox
+    #   run: make tox
+    # - name: 🧹 Lint
+    #   run: make lint
+    - name: ⚖ Does the checked-in Pelican output match the built result?
+      run: make verify_pelican_checkin
+  codeql:
+    name: CodeQL 🛡👨‍💻🛡
+    if: >- 
+      ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && github.event.ref == 'refs/heads/main') }}
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🏁 Checkout
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    - name: 🛡👨‍💻🛡 Init CodeQL
+      uses: github/codeql-action/init@f09c1c0a94de965c15400f5634aa42fac8fb8f88 # v3.27.5
+      with:
+        languages: python
+        queries: +security-extended,security-and-quality
+    - name: 🛠 Autobuild
+      uses: github/codeql-action/autobuild@f09c1c0a94de965c15400f5634aa42fac8fb8f88 # v3.27.5
+    - name: 🛡👨‍💻🛡 Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@f09c1c0a94de965c15400f5634aa42fac8fb8f88 # v3.27.5
+      with:
+        category: "/language:python"
+  # docs: ~ there is no need for a docs test, the web-* are all already about docs gen.
