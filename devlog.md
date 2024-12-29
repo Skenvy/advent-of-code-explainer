@@ -25,6 +25,14 @@ git commit -m "Initial empty orphan" --allow-empty
 git push --set-upstream origin gh-pages-web
 ```
 
+## Pelican
+[Pelican Quickstart](https://getpelican.com/#quickstart).
+Pelican generates a makefile, which is nice, but it assumes you're running it globally. Because lines in a make recipe are run in new shells, we need to inherit our custom recipes and variables for wrapping local development with virtual envs.
+There's quite a few recipes that are automatically generated. As one of the steps I use in CI is checking that the target (output) is checked in as what would be built by the checked in content (input), I am in a habit of manually running `make ~site` or `make ~serve` each time anyway (and often at the behest of my CI failing when I forget to). So we can get rid of all the watcher / live reloading recipes, even if they're a good practice.
+We're then left with whatever the difference is between the `pelicanconf.py` and the `publishconf.py`. [This SO question](https://stackoverflow.com/questions/20817192/what-is-the-difference-between-pelicanconf-and-publishconf-when-using-pelican) answers it (although the names might make it obvious and the generated makefile had an explanation, it's good to know _why_).
+For our purpose, we don't really care much about keeping a barrier between the two. That is to say, I would like to know that I'm previewing the site using the "publishing" settings, so I'd like to just use one settings file. This can be done, but we would still need two recipes, one that uses the relative urls setting, and another that doesn't, because without relative urls, building the site using the publishing `SITEURL` and previewing it, shows a very different page to using relative urls, which are not recommended for published pages.
+I guess because we'd still be publishing with relative urls to view the publishconf build locally we may as well just not change it from building with two different settings files, as either way there'd be an extra recipe to remember. Plus, it doesn't really matter, I'm trying to not have a contrary opinion on this.
+
 ## `pelican-quickstart`
 Without yet knowing how easy pelican will be to use, the amount of questions that the "quickstart" asked, without necessarilly explaining what they meant, was enough that I had to google what some of them were, or the possible answers that could be given.
 ```
