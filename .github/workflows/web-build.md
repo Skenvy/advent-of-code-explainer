@@ -1,0 +1,174 @@
+```yaml
+name: Web 📄 Test 🦂 Build 🧱 Release 🚰 and Publish 📦
+on:
+  push:
+    branches:
+    - 'main'
+    paths:
+    - 'web/**'
+    # - '!web/**.md' usually we ignore these by .md are the source for this.
+    - '.github/workflows/web-*'
+  workflow_dispatch:
+permissions: {}
+defaults:
+  run:
+    shell: bash
+    working-directory: web
+env:
+  development_python_version: 3.12.3
+jobs:
+  test:
+    name: Test 🦂
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses: ./.github/workflows/web-test.yaml
+  workflow-conditions:
+    name: 🛑🛑🛑 Stop builds that didn't change the release version 🛑🛑🛑
+    runs-on: ubuntu-latest
+    outputs:
+      version-file-changed: ${{ steps.version-file-check.outputs.version-file-changed }}
+      version-tag-exists: ${{ steps.version-tag-exists.outputs.version-tag-exists }}
+    steps:
+    - name: 🏁 Checkout
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      with:
+        fetch-depth: 2
+    - name: Check if version files changed
+      id: version-file-check
+      run: |
+        export VERSION_FILE="web/src/advent_of_code_explainer/__version__.py"
+        [ "$(git diff HEAD^1.. --name-only | grep -e "^$VERSION_FILE$")" == "$VERSION_FILE" ] && echo "version-file-changed=${{toJSON(true)}}" >> $GITHUB_OUTPUT || echo "version-file-changed=${{toJSON(false)}}" >> $GITHUB_OUTPUT
+    - name: Notify on version-file-check
+      run: echo "::Notice::version-file-changed is ${{ fromJSON(steps.version-file-check.outputs.version-file-changed) }}"
+    - name: Check if version specified in version file has not released.
+      id: version-tag-exists
+      run: |
+        git fetch --tags
+        export VER=$(cut -d \" -f 2 src/advent_of_code_explainer/__version__.py)
+        [ -z "$(git tag -l "web-v$VER")" ] && echo "version-tag-exists=${{toJSON(false)}}" >> $GITHUB_OUTPUT || echo "version-tag-exists=${{toJSON(true)}}" >> $GITHUB_OUTPUT
+    - name: Notify on version-tag-exists
+      run: echo "::Notice::version-tag-exists is ${{ fromJSON(steps.version-tag-exists.outputs.version-tag-exists) }}"
+  # Now any step that should only run on the version change can use
+  # "needs: [workflow-conditions]" Which will yield the condition checks below.
+  # We want to "release" automatically if "version-file-changed" is true on push
+  # Or manually if workflow_dispatch. BOTH need "version-tag-exists" is false.
+  build:
+    name: Build 🧱
+    needs: [test, workflow-conditions]
+    if: >-
+      ${{ ((fromJSON(needs.workflow-conditions.outputs.version-file-changed) == true && github.event_name == 'push') ||
+      github.event_name == 'workflow_dispatch') && fromJSON(needs.workflow-conditions.outputs.version-tag-exists) == false }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🏁 Checkout
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+      with:
+        python-version: ${{ env.development_python_version }}
+    - name: 🧱 Install build dependencies
+      run: make setup
+    - name: 🎡 Build wheel and source
+      run: make build
+    - name: 🆙 Upload dists
+      uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+      with:
+        name: built-dists
+        path: web/dist/
+        if-no-files-found: error
+  release:
+    name: Release 🚰
+    needs: [build]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🏁 Checkout
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    - name: 🆒 Download dists
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      with:
+        name: built-dists
+        path: web/dist
+    - name: 🚰 Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: >-
+        export VER=$(cut -d \" -f 2 src/advent_of_code_explainer/__version__.py) && 
+        gh release create
+        web-v$VER
+        "$(find dist | grep \\-none\\-any\\.whl)#Wheel"
+        "$(find dist | grep \\.tar\\.gz)#Tarball"
+        --generate-notes
+        -t "web: Version $VER"
+  publish:
+    name: Publish 📦
+    needs: [release]
+    runs-on: ubuntu-latest
+    steps:
+    # Although the dists are built uses checkout to satisfy refs/tags existence
+    # which were created by the release, prior to uploading to pypi.
+    - name: 🏁 Checkout
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    - name: 🆒 Download dists
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      with:
+        name: built-dists
+        path: web/dist
+    - name: 📦 Publish to Test PyPI
+      uses: pypa/gh-action-pypi-publish@15c56dba361d8335944d31a2ecd17d700fc7bcbc # v1.12.2
+      with:
+        packages_dir: web/dist
+        skip_existing: true
+        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
+    - name: 📦 Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@15c56dba361d8335944d31a2ecd17d700fc7bcbc # v1.12.2
+      with:
+        packages_dir: web/dist
+        password: ${{ secrets.PYPI_API_TOKEN }}
+  docs:
+    name: Docs 📄
+    needs: [release, publish]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🏁 Checkout
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+      with:
+        python-version: ${{ env.development_python_version }}
+    - name: 🧱 Install build dependencies
+      run: make setup
+    - name: 📄 Docs Generation
+      run: make docs
+    - name: 📄 Docs Publishing
+      run: |-
+        git config --local user.email "actions@github.com"
+        git config --local user.name "Github Actions"
+        export SHORTSHA=$(git rev-parse --short HEAD)
+        git fetch origin gh-pages-web:gh-pages-web
+        git symbolic-ref HEAD refs/heads/gh-pages-web
+        cd .. && mv web/docs/build ../MERGE_TARGET
+        git rm -rf . && git clean -fxd && git reset
+        shopt -s dotglob && mkdir web && mv ../MERGE_TARGET/* web/
+        git add .
+        git commit -m "Build based on $SHORTSHA" --allow-empty
+        git push --set-upstream origin gh-pages-web
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  docs-merge:
+    name: GitHub 🐱‍👤 Pages 📄 Merger 🧬
+    needs: [docs]
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/github-pages.yaml
+    with:
+      merge_from: 'gh-pages-web'
+```
