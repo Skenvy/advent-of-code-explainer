@@ -29,3 +29,17 @@ SOCIAL = (
     ("GitHub", "https://github.com/Skenvy"),
     ("PyPI", "https://pypi.org/user/Skenvy/"),
 )
+
+# Used https://github.com/getpelican/pelican/wiki/Tips-n-Tricks for the below
+
+# "Extra" content hooked in
+STATIC_PATHS = ["images", "extra/robots.txt", "extra/favicon.ico"]
+EXTRA_PATH_METADATA = {
+    "extra/robots.txt": {"path": "robots.txt"},
+    "extra/favicon.ico": {"path": "favicon.ico"}
+}
+
+# default value is ('index', 'tags', 'categories', 'archives')
+# so we just add a 'sitemap'
+DIRECT_TEMPLATES = ('index', 'tags', 'categories', 'archives', 'sitemap')
+SITEMAP_SAVE_AS = 'sitemap.xml'

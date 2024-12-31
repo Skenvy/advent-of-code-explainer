@@ -151,4 +151,22 @@ Worth mentioning is that pyscript can run with either pyodide or micropython. In
 ## PyScript within Pelican
 Thanks once again to this [blog post][Using PyScript with Pelican], we have a path to getting pelican to create a site that makes use of pyscript.
 
+### Custom Theme init
 The first thing we need is our own custom pelican theme. It doesn't actually need to be _heavily_ customised, we just need our own quick-start theme to add a piece to it that will add the required `<script/>` that loads pyscript in the `<head/>`. We can follow [Pelican Themes](https://docs.getpelican.com/en/latest/themes.html) docs to see how to add a minimal theme. Excessive customisation of this isn't the point, it's entirely just to let pelican add the required head script. There exists [community maintained themes](https://github.com/getpelican/pelican-themes). The end of the page for themes includes an easy way to start, with just a `templates/base.html` file, and a `static/css/style.css` file. We'll put these in our `./web/theme/` folder, so we can just locally target the theme.
+
+It does appear very simple though. Extending the "simple" theme is very minimalist, which is fine, but I assumed that simple was just the name of the default theme. It'd be nice to extend the default theme. The "notmyidea" theme is apparently the default. We can see two issues for this on the pelican repo [2745](https://github.com/getpelican/pelican/issues/2745) and [1092](https://github.com/getpelican/pelican/issues/1092). Of course, we are developing locally with pelican, the package of which includes the default "notmyidea" theme. Can we just escape out to the location of that theme installed in our virtual env? No, we can't. It appears that the simple theme is the only one that we can extend from in the base. Our `./web/theme/templates/base.html` can either start with `{% extends "!simple/base.html" %}` or extend a file, so long as the file is only forward. We'll accept `!simple` for now.
+
+### Custom Theme adding PyScript
+We will be writing each day as an "article" (our markdown pages in the content folder). Article's metadata declared at the top i.e. `Title: My First Post` will be exposed in our `templates/article.html` as `{{ article.title }}`. From reading the blog linked above it looks like [rcassani's method for implementing this](https://github.com/rcassani/pelican-kis/commit/a6d975444b47696c49b5170d06d7e659a195e4d5) is a good simple choice, although we aren't concerned with whether or not to load pyscript conditionally, because every article should load it, it would behove us to extend this with a choice of how to load which version of the pyscript script. I'll put the theme under the same MIT license they use because it should be more permissive than the GNU3 that everything else here is under, but given that it's one small example component I'm taking inspiration from (even if it's the important part for here) and I'm preserving the license terms, this comment feels attribution enough.
+
+The method we'll adopt is similar. Use of the `pyscript` metadata on an article to specify the version used ~ our example uses version `2024.11.1`
+```html
+<link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+<script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+```
+But it would appear that the releases on [the pyscript repo release page](https://github.com/pyscript/pyscript/releases) all work for this (at least, if they aren't pre-releases). The `latest` version appears in older examples, but has been deprecated apparently. So we'll add a "default" -- that is, if an article has metadata `pyscript: default` then it will just get the default we assign in the template. Loading the CSS on an independent check is probably something we could preserve. We could let `PyScript: js+css` control what gets loaded, and use the version under as `PyScriptVersion: x.y.z`
+
+For now, I've set it up so that the articles
+
+### Some small other things for a sec
+Generating the site and viewing it to test that the articles have the expected pyscript pages yields a few warnings about missing icons. They don't really matter that much but any red sign is mid, so we can have a look at ["Tips-n-Tricks"](https://github.com/getpelican/pelican/wiki/Tips-n-Tricks) to see what we can do about this.
