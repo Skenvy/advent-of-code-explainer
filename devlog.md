@@ -170,3 +170,10 @@ For now, I've set it up so that the articles
 
 ### Some small other things for a sec
 Generating the site and viewing it to test that the articles have the expected pyscript pages yields a few warnings about missing icons. They don't really matter that much but any red sign is mid, so we can have a look at ["Tips-n-Tricks"](https://github.com/getpelican/pelican/wiki/Tips-n-Tricks) to see what we can do about this.
+
+### Testing an article using the theme
+Following on along with the post, we see we can just embed html into the md files pelican will process. We need to extend the static files to let us include `scripts`, and reference them from within the embedded html. A key step in the process of setting this up is buried in this subparagraph, but that key step is including the `pyscript.toml` file in our `content` folder, and making sure our `pelicanconf` is such that it will be included in the output, and knowing what the path to it will be so our embedded html can use it.
+
+For here, I've added it in `content/scripts/pyscript.toml` because I'm expecting to share it on all pages, but that wouldn't necessarily be required, i.e. different `pyscript.toml`'s could be used, which seems like it pairs nicely with our theme being able to take a required release version, but it's unnecessary complication for the MVP. For now, we will stick to using our `PyScriptVersion: default` in our article metadata, as well as one shared `content/scripts/pyscript.toml` that each `<script/>` tag can source with `config="./scripts/pyscript.toml"`.
+
+And having it work, when viewing individual articles, is a nice place to call this for tonight. Even if it's not very intuitive looking at the moment.
