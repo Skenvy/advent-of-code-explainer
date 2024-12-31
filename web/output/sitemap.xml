@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
+    <loc>/readme.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>/my-first-post-with-pyscript-custom-version.html</loc>
     <priority>0.8</priority>
   </url>

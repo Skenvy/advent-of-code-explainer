@@ -22,6 +22,7 @@
       <hgroup><h1><a href="/">Advent of Code: Explainer</a></h1></hgroup>
       <nav><ul>
             <li><a href="/category/examplecategory.html"  aria-current="page" >ExampleCategory</a></li>
+            <li><a href="/category/meta.html" >Meta</a></li>
       </ul></nav>
     </header>
     <main>
@@ -33,6 +34,16 @@
       
     </header>
     <p>Following is some example text!</p>
+<!-- TODO confirm that these relative src paths that work locally are ok once merge in gh-pages under a subdir -->
+
+<div style="border: 2px solid black;padding: 10px;">
+  <h1>Pyscript Test: AOCE</h1>
+  <p>Run AOCE function</p>
+  <input type="text" id="input_number" placeholder="Type number here..." />
+  <button py-click="do_a_thing">Get next value</button>
+  <div id="output_number"></div>
+  <script type="py" src="./scripts/2024/example.py" config="./scripts/pyscript.toml"></script>
+</div>
     <footer>
       <p>Published: <time datetime="2024-12-03T00:00:00+00:00">
         Tue 03 December 2024
