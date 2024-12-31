@@ -144,5 +144,11 @@ I did initially stumble upon [this example](https://pyscript.com/@anicete/pirate
 
 If we just put these 3 files in gh-pages, it'll work. But it wont be very pretty or useful, and touching a lot of html does seem excessive. So we might as well wrap pyscript with pelican. Any blogging / static site generation tool could be viable, pelican just happened to be the first one I read in a list when I searched python static site generators. It also ended up having a [blog post][Using PyScript with Pelican] running through an example of getting pyscript working within a pelican generated site, so it's viable. But this example is an important grounding point to come back to if there's issues later on, because we at least have this as an MVP.
 
+Of course my very very first attempt with pyscript can be seen [here](https://pyscript.com/@skenvy/my-first-pyscript-attempt/latest).
+
+Worth mentioning is that pyscript can run with either pyodide or micropython. In a `<script/>` tag, `type="py"` is how we run with pyodide and `type="mpy"` is how we run with micropython. Micropython can only run embedded python or included python files, it can't pull packages from PyPI. So for us wanting to use a published package, we will need to use pyodide.
+
 ## PyScript within Pelican
 Thanks once again to this [blog post][Using PyScript with Pelican], we have a path to getting pelican to create a site that makes use of pyscript.
+
+The first thing we need is our own custom pelican theme. It doesn't actually need to be _heavily_ customised, we just need our own quick-start theme to add a piece to it that will add the required `<script/>` that loads pyscript in the `<head/>`. We can follow [Pelican Themes](https://docs.getpelican.com/en/latest/themes.html) docs to see how to add a minimal theme. Excessive customisation of this isn't the point, it's entirely just to let pelican add the required head script. There exists [community maintained themes](https://github.com/getpelican/pelican-themes). The end of the page for themes includes an easy way to start, with just a `templates/base.html` file, and a `static/css/style.css` file. We'll put these in our `./web/theme/` folder, so we can just locally target the theme.

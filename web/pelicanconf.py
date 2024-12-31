@@ -2,6 +2,7 @@ AUTHOR = 'Skenvy'
 SITENAME = 'Advent of Code: Explainer'
 SITEURL = ""
 
+THEME = './theme' # our custom theme
 PATH = "content"
 RELATIVE_URLS = False
 
