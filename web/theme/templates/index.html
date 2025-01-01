@@ -1,0 +1,46 @@
+{% extends "!simple/index.html" %}
+
+## The normal "simple index" shows a summary of all articles, which we don't
+## want, as they will not be interactive while on any page that isn't one of
+## the actual "article" pages, as we've only added pyscript to the article
+## head, so to prevent interactive elements from appearing but being unusable,
+## if article sets the pyscript metadata, hide the summary.
+
+{% block content %}
+    {% block content_title %}
+        <h2>All articles</h2>
+    {% endblock %}
+
+
+    {% for article in articles_page.object_list %}
+        <article>
+            <header> <h2><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2> </header>
+            {% if (article.pyscript and 'js' in article.pyscript) %}
+              <div style="border: 2px solid rgb(255, 153, 0); padding: 10px; background: rgb(255, 204, 127);">
+              <section><i>
+                This summary has been hidden as the article uses <a href="https://pyscript.net/">PyScript</a>, and components won't be interactive on a non-article page.<br>
+                <a href="{{ SITEURL }}/{{ article.url }}">Click here</a>, or the article name above this notice to view the whole article to load the interactive page properly.<br>
+                Alternatively read the top README article for an explanation about how this works.<br>
+              </i></section>
+              </div>
+            {% else %}
+              <div style="border: 2px solid rgb(0, 255, 0); padding: 10px; background: rgb(153, 255, 153);">
+                <section>{{ article.summary }}</section>
+              </div>
+            {% endif %}
+            <footer>
+                <p>Published: <time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }} </time></p>
+                <address>By
+                    {% for author in article.authors %}
+                        <a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>
+                    {% endfor %}
+                </address>
+            </footer>
+        </article>
+    {% endfor %}
+
+    {% if articles_page.has_other_pages() %}
+        {% include 'pagination.html' %}
+    {% endif %}
+
+{% endblock content %}

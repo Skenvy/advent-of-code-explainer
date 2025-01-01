@@ -1,19 +1,19 @@
-name: Pkg 📦 Tests 🦂
+name: Web 📄 Tests 🦂
 on:
   push:
     branches-ignore:
     - 'main'
     paths:
-    - 'pkg/**'
-    - '!pkg/**.md'
-    - '.github/workflows/pkg-*'
+    - 'web/**'
+    - '!web/**.md'
+    - '.github/workflows/web-*'
   pull_request:
     branches:
     - 'main'
     paths:
-    - 'pkg/**'
-    - '!pkg/**.md'
-    - '.github/workflows/pkg-*'
+    - 'web/**'
+    - '!web/**.md'
+    - '.github/workflows/web-*'
   schedule: # 9AM on the 15th
   - cron: 0 22 14 1,2,3,10,11,12 * # AEDT Months
   - cron: 0 23 14 4,5,6,7,8,9 *    # AEST Months
@@ -22,7 +22,7 @@ permissions: {}
 defaults:
   run:
     shell: bash
-    working-directory: pkg
+    working-directory: web
 env:
   development_python_version: 3.12.3
 jobs:
@@ -39,12 +39,17 @@ jobs:
         python-version: ${{ env.development_python_version }}
     - name: 🧱 Install build dependencies
       run: make setup
-    - name: 🦂 Test with pytest
-      run: make test
-    - name: 🧹 Lint
-      run: make lint
-    - name: ⚖ Does the checked source match the built result? 
-      run: make verify_sphinx_checkin
+    # - name: 🦂 Test with pytest
+    #   run: make test
+    # - name: 🧹 Lint
+    #   run: make lint
+    - name: 🦢 Can pelican generate?
+      run: make generate
+    - name: 🦢 Can pelican publish?
+      run: make publish
+  # TODO: Use full test to test the python files that will be built into
+  # the pelican site across multiple pyodide versions or something?
+  # https://github.com/pyodide/pytest-pyodide
   full-test:
     name: Full Test 🦂
     if: >- 
@@ -54,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.10', '3.12']
         os: [ubuntu-latest, macOS-latest]
     steps:
     - name: 🏁 Checkout
@@ -65,12 +70,14 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: 🧱 Install build dependencies
       run: make setup
-    - name: 🦂 Test with tox
-      run: make tox
-    - name: 🧹 Lint
-      run: make lint
-    - name: ⚖ Does the checked source match the built result? 
-      run: make verify_sphinx_checkin
+    # - name: 🦂 Test with tox
+    #   run: make tox
+    # - name: 🧹 Lint
+    #   run: make lint
+    - name: 🦢 Can pelican generate?
+      run: make generate
+    - name: 🦢 Can pelican publish?
+      run: make publish
   codeql:
     name: CodeQL 🛡👨‍💻🛡
     if: >- 
@@ -95,17 +102,6 @@ jobs:
       uses: github/codeql-action/analyze@f09c1c0a94de965c15400f5634aa42fac8fb8f88 # v3.27.5
       with:
         category: "/language:python"
-  docs:
-    name: Docs 📄 Quick Test 🦂
-    runs-on: ubuntu-latest
-    steps:
-    - name: 🏁 Checkout
-      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-    - name: 🐍 Set up Python
-      uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
-      with:
-        python-version: ${{ env.development_python_version }}
-    - name: 🧱 Install build dependencies
-      run: make setup
-    - name: 📄 Docs
-      run: make docs
+  # docs: ~ there is no need for a docs test, the web-* are all already about docs gen.
+  # If we ever get around to setting up something to test the scripts in content with
+  # pyodide and pyscript, then we could move the make generate / publish tests to here.

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <title>Test of this pyscript thing</title>
+      <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+      <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+  </head>
+  <body>
+    <h1>Pyscript Test: AOCE</h1>
+    <p>Run AOCE function</p>
+    <input type="text" id="input_number" placeholder="Type number here..." />
+    <button py-click="do_a_thing">Get next value</button>
+    <div id="output_number"></div>
+    <script type="py" src="./main.py" config="./pyscript.toml"></script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+{% extends "!simple/article.html" %}
+
+## Handles metadata fields "pyscript" and "pyscriptversion" to add relevant css
+## and js in <head/>. A simpler more universal approach would be to just always
+## include both of these for whatever the latest is in the base, and that way it
+## would be available on every page. Because I've chosen this approach, pyscript
+## will only be loaded when the page being viewed is specifically an article, so
+## it's possible that interactive elements that are visible from the parts of an
+## article that are rendered on other pages, might appear broken, and definitely
+## won't be interactive, because other pages don't load these. An alternative to
+## this could be setting the PyScript version in pelicanconf and loading in base
+## but that feels like it would be more appropriate with micropython not pyodide
+
+## The recommended / typical metadata to add to an article to use this are;
+## PyScript: js+css
+## PyScriptVersion: default
+
+{% block head %}
+  {{ super() }}
+  {% block pyscript %}
+    {% if (article.pyscript and 'js' in article.pyscript) %}
+      {% if article.pyscriptversion %}
+        {# Set default PyScript version to "latest" from https://docs.pyscript.net/ #}
+        {% set defaultpyscriptversion = '2024.11.1' %}
+        {% if 'default' in article.pyscriptversion %}
+          {% set pyscriptversion = defaultpyscriptversion %}
+        {% else %}
+          {% set pyscriptversion = article.pyscriptversion %}
+        {% endif %}
+      {% endif %}
+      {% if 'css' in article.pyscript %}
+        <link rel="stylesheet" href="https://pyscript.net/releases/{{ pyscriptversion }}/core.css">
+      {% endif %}
+      <script async type="module" src="https://pyscript.net/releases/{{ pyscriptversion }}/core.js"></script>
+    {% endif %}
+  {% endblock pyscript %}
+{% endblock %}

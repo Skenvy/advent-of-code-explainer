@@ -1,0 +1,9 @@
+################################################################################
+################### Development Virtual Environment Requires ###################
+################################################################################
+# https://getpelican.com/#quickstart
+pelican[markdown]
+# Pyscript
+pyscript
+# This's package.
+advent_of_code_explainer
