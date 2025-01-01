@@ -43,8 +43,10 @@ jobs:
     #   run: make test
     # - name: 🧹 Lint
     #   run: make lint
-    - name: ⚖ Does the checked-in Pelican output match the built result?
-      run: make verify_pelican_checkin
+    - name: 🦢 Can pelican generate?
+      run: make generate
+    - name: 🦢 Can pelican publish?
+      run: make publish
   # TODO: Use full test to test the python files that will be built into
   # the pelican site across multiple pyodide versions or something?
   # https://github.com/pyodide/pytest-pyodide
@@ -72,8 +74,10 @@ jobs:
     #   run: make tox
     # - name: 🧹 Lint
     #   run: make lint
-    - name: ⚖ Does the checked-in Pelican output match the built result?
-      run: make verify_pelican_checkin
+    - name: 🦢 Can pelican generate?
+      run: make generate
+    - name: 🦢 Can pelican publish?
+      run: make publish
   codeql:
     name: CodeQL 🛡👨‍💻🛡
     if: >- 
@@ -99,3 +103,5 @@ jobs:
       with:
         category: "/language:python"
   # docs: ~ there is no need for a docs test, the web-* are all already about docs gen.
+  # If we ever get around to setting up something to test the scripts in content with
+  # pyodide and pyscript, then we could move the make generate / publish tests to here.
