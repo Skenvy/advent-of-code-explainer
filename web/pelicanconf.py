@@ -1,22 +1,14 @@
+################################################################################
+# GENERAL
 AUTHOR = 'Skenvy'
 SITENAME = 'Advent of Code: Explainer'
-SITEURL = ""
-
-THEME = './theme' # our custom theme
-PATH = "content"
-ARTICLE_PATHS = ['articles']
-RELATIVE_URLS = False
+SITEURL = "" # set in publishconf
 
 TIMEZONE = 'UTC'
+# DEFAULT_DATE_FORMAT = '%Y/%m/%d'
 DEFAULT_LANG = 'en'
-DEFAULT_PAGINATION = 5
 
-# Feed generation is usually not desired when developing
-FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
-TRANSLATION_FEED_ATOM = None
-AUTHOR_FEED_ATOM = None
-AUTHOR_FEED_RSS = None
+RELATIVE_URLS = False
 
 # Blogroll
 LINKS = (
@@ -29,9 +21,17 @@ LINKS = (
 SOCIAL = (
     ("GitHub", "https://github.com/Skenvy"),
     ("PyPI", "https://pypi.org/user/Skenvy/"),
+    ("LinkedIn", "https://www.linkedin.com/in/nathan-levett/"),
 )
 
-# See https://github.com/getpelican/pelican/wiki/Tips-n-Tricks 
+################################################################################
+# THEME
+THEME = './theme' # our basic custom pyscript enabling theme
+
+################################################################################
+# CONTENT
+PATH = 'content'
+ARTICLE_PATHS = ['articles']
 
 # "Extra" content hooked in
 STATIC_PATHS = ["images", "extra/robots.txt", "extra/favicon.ico", "scripts"]
@@ -43,3 +43,20 @@ EXTRA_PATH_METADATA = {
 # default value is ('index', 'tags', 'categories', 'archives')
 DIRECT_TEMPLATES = ('index', 'tags', 'categories', 'archives', 'sitemap')
 SITEMAP_SAVE_AS = 'sitemap.xml'
+
+################################################################################
+# OUTPUT
+OUTPUT_PATH = 'output'
+ARTICLE_URL = 'articles/{date:%Y-%m-%d}-{slug}/'
+ARTICLE_SAVE_AS = ARTICLE_URL + 'index.html'
+
+DEFAULT_PAGINATION = 5
+
+################################################################################
+# FEED
+# Feed generation is usually not desired when developing
+FEED_ALL_ATOM = None
+CATEGORY_FEED_ATOM = None
+TRANSLATION_FEED_ATOM = None
+AUTHOR_FEED_ATOM = None
+AUTHOR_FEED_RSS = None
