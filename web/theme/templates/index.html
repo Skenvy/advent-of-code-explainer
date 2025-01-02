@@ -14,13 +14,13 @@
 
     {% for article in articles_page.object_list %}
         <article>
-            <header> <h2><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2> </header>
+            <header> <h2><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }} (<time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }} </time>)</a></h2> </header>
             {% if (article.pyscript and 'js' in article.pyscript) %}
               <div style="border: 2px solid rgb(255, 153, 0); padding: 10px; background: rgb(255, 204, 127);">
               <section><i>
                 This summary has been hidden as the article uses <a href="https://pyscript.net/">PyScript</a>, and components won't be interactive on a non-article page.<br>
                 <a href="{{ SITEURL }}/{{ article.url }}">Click here</a>, or the article name above this notice to view the whole article to load the interactive page properly.<br>
-                Alternatively read the top README article for an explanation about how this works.<br>
+                Alternatively read the top <a href="{{ README_ARTICLE_URL }}">README article</a> for an explanation about how this works. Or view the pelican theme <a href="{{ PELICAN_THEME_SOURCE_URL }}">here</a>.<br>
               </i></section>
               </div>
             {% else %}
@@ -28,14 +28,6 @@
                 <section>{{ article.summary }}</section>
               </div>
             {% endif %}
-            <footer>
-                <p>Published: <time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }} </time></p>
-                <address>By
-                    {% for author in article.authors %}
-                        <a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>
-                    {% endfor %}
-                </address>
-            </footer>
         </article>
     {% endfor %}
 

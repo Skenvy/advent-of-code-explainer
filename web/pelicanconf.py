@@ -5,7 +5,7 @@ SITENAME = 'Advent of Code: Explainer'
 SITEURL = "" # set in publishconf
 
 TIMEZONE = 'UTC'
-# DEFAULT_DATE_FORMAT = '%Y/%m/%d'
+DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 DEFAULT_LANG = 'en'
 
 RELATIVE_URLS = False
@@ -27,6 +27,8 @@ SOCIAL = (
 ################################################################################
 # THEME
 THEME = './theme' # our basic custom pyscript enabling theme
+README_ARTICLE_URL = 'https://skenvy.github.io/advent-of-code-explainer/web/articles/9999-12-31-readme/'
+PELICAN_THEME_SOURCE_URL = 'https://github.com/Skenvy/advent-of-code-explainer/tree/main/web/theme'
 
 ################################################################################
 # CONTENT
