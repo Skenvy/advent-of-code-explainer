@@ -19,7 +19,7 @@ TODO LONG DESCRIPTION
 >>> example.function('example input')
 'ye'
 ```
-## [Sphinx+MyST generated docs](https://skenvy.github.io/advent-of-code-explainer/)
+## [Sphinx+MyST generated docs](https://skenvy.github.io/advent-of-code-explainer/pkg/)
 ## Developing
 ### The first time setup
 ```
