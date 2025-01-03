@@ -177,3 +177,6 @@ Following on along with the post, we see we can just embed html into the md file
 For here, I've added it in `content/scripts/pyscript.toml` because I'm expecting to share it on all pages, but that wouldn't necessarily be required, i.e. different `pyscript.toml`'s could be used, which seems like it pairs nicely with our theme being able to take a required release version, but it's unnecessary complication for the MVP. For now, we will stick to using our `PyScriptVersion: default` in our article metadata, as well as one shared `content/scripts/pyscript.toml` that each `<script/>` tag can source with `config="./scripts/pyscript.toml"`.
 
 And having it work, when viewing individual articles, is a nice place to call this for tonight. Even if it's not very intuitive looking at the moment.
+
+### Testing pyscript
+In looking for ways to test pyscript scripts, we can see [pyscript/upytest](https://github.com/pyscript/upytest) exists, and [some `pyscript.web` tests in pyscript/pyscript](https://github.com/pyscript/pyscript/blob/main/core/tests/python/tests/test_web.py) show similar things to what we'd want to use it for here. Step one is that we need a local copy of the `upytest.py` file, that will exist in the context of where our site will be generated from, such that the file can end up in the site output.

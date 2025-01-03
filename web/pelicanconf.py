@@ -36,7 +36,7 @@ PATH = 'content'
 ARTICLE_PATHS = ['articles']
 
 # "Extra" content hooked in
-STATIC_PATHS = ["images", "scripts", "extra/robots.txt", "extra/favicon.ico", "extra/version.html"]
+STATIC_PATHS = ["images", "scripts", "tests", "extra"]
 EXTRA_PATH_METADATA = {
     "extra/robots.txt": {"path": "robots.txt"},
     "extra/favicon.ico": {"path": "favicon.ico"},

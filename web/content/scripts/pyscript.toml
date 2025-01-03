@@ -1,1 +1,5 @@
 packages = ["advent-of-code-explainer==0.0.1"]
+
+[files]
+"../tests/base/upytest.py" = "base/upytest.py"
+"../tests/tests/test_example.py" = "tests/test_example.py"
