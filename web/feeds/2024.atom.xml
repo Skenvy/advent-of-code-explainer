@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Advent of Code: Explainer - 2024</title><link href="https://skenvy.github.io/advent-of-code-explainer/web/" rel="alternate"></link><link href="https://skenvy.github.io/advent-of-code-explainer/web/feeds/2024.atom.xml" rel="self"></link><id>https://skenvy.github.io/advent-of-code-explainer/web/</id><updated>2024-12-03T00:00:00+00:00</updated><entry><title>Mull It Over</title><link href="https://skenvy.github.io/advent-of-code-explainer/web/articles/2024-12-03-mull-it-over/" rel="alternate"></link><published>2024-12-03T00:00:00+00:00</published><updated>2024-12-03T00:00:00+00:00</updated><author><name>Skenvy</name></author><id>tag:skenvy.github.io,2024-12-03:/advent-of-code-explainer/web/articles/2024-12-03-mull-it-over/</id><content type="html">&lt;p&gt;&lt;a href="https://adventofcode.com/2024/day/3"&gt;Link to AoC&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This is an example article that demonstrates the &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; box, as well as the pyscript metadata on the article, using a non-default &lt;code&gt;PyScriptVersion&lt;/code&gt;. All this will do is add one to the number in the box.&lt;/p&gt;
-&lt;!-- TODO confirm that these relative src paths that work locally are ok once merge in gh-pages under a subdir --&gt;
-
 &lt;div style="border: 2px solid black;padding: 10px;"&gt;
   &lt;h1&gt;Pyscript Test: AOCE&lt;/h1&gt;
   &lt;p&gt;Run AOCE function&lt;/p&gt;
@@ -11,9 +8,6 @@
   &lt;div id="output_number"&gt;&lt;/div&gt;
   &lt;script type="py" src="../../scripts/2024/1.py" config="../../scripts/pyscript.toml"&gt;&lt;/script&gt;
 &lt;/div&gt;</content><category term="2024"></category></entry><entry><title>Red-Nosed Reports</title><link href="https://skenvy.github.io/advent-of-code-explainer/web/articles/2024-12-02-red-nosed-reports/" rel="alternate"></link><published>2024-12-02T00:00:00+00:00</published><updated>2024-12-02T00:00:00+00:00</updated><author><name>Skenvy</name></author><id>tag:skenvy.github.io,2024-12-02:/advent-of-code-explainer/web/articles/2024-12-02-red-nosed-reports/</id><content type="html">&lt;p&gt;&lt;a href="https://adventofcode.com/2024/day/2"&gt;Link to AoC&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This is an example article that demonstrates the &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; box, as well as the pyscript metadata on the article. All this will do is add one to the number in the box.&lt;/p&gt;
-&lt;!-- TODO confirm that these relative src paths that work locally are ok once merge in gh-pages under a subdir --&gt;
-
 &lt;div style="border: 2px solid black;padding: 10px;"&gt;
   &lt;h1&gt;Pyscript Test: AOCE&lt;/h1&gt;
   &lt;p&gt;Run AOCE function&lt;/p&gt;
@@ -21,4 +15,12 @@
   &lt;button py-click="do_a_thing"&gt;Get next value&lt;/button&gt;
   &lt;div id="output_number"&gt;&lt;/div&gt;
   &lt;script type="py" src="../../scripts/2024/1.py" config="../../scripts/pyscript.toml"&gt;&lt;/script&gt;
-&lt;/div&gt;</content><category term="2024"></category></entry><entry><title>Historian Hysteria</title><link href="https://skenvy.github.io/advent-of-code-explainer/web/articles/2024-12-01-historian-hysteria/" rel="alternate"></link><published>2024-12-01T00:00:00+00:00</published><updated>2024-12-01T00:00:00+00:00</updated><author><name>Skenvy</name></author><id>tag:skenvy.github.io,2024-12-01:/advent-of-code-explainer/web/articles/2024-12-01-historian-hysteria/</id><content type="html">&lt;p&gt;&lt;a href="https://adventofcode.com/2024/day/1"&gt;Link to AoC&lt;/a&gt;.&lt;/p&gt;</content><category term="2024"></category></entry></feed>
+&lt;/div&gt;</content><category term="2024"></category></entry><entry><title>Historian Hysteria</title><link href="https://skenvy.github.io/advent-of-code-explainer/web/articles/2024-12-01-historian-hysteria/" rel="alternate"></link><published>2024-12-01T00:00:00+00:00</published><updated>2024-12-01T00:00:00+00:00</updated><author><name>Skenvy</name></author><id>tag:skenvy.github.io,2024-12-01:/advent-of-code-explainer/web/articles/2024-12-01-historian-hysteria/</id><content type="html">&lt;p&gt;&lt;a href="https://adventofcode.com/2024/day/1"&gt;Link to AoC&lt;/a&gt;.&lt;/p&gt;
+&lt;div style="border: 2px solid black;padding: 10px;"&gt;
+  &lt;h1&gt;Pyscript Test: AOCE&lt;/h1&gt;
+  &lt;p&gt;Run AOCE function&lt;/p&gt;
+  &lt;input type="text" id="input_number" placeholder="Type number here..." /&gt;
+  &lt;button py-click="do_a_thing"&gt;Get next value&lt;/button&gt;
+  &lt;div id="output_number"&gt;&lt;/div&gt;
+  &lt;script type="py" src="../../scripts/2024/1.py" config="../../scripts/pyscript.toml"&gt;&lt;/script&gt;
+&lt;/div&gt;</content><category term="2024"></category></entry></feed>
