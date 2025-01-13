@@ -1,6 +1,11 @@
-def solve_one(number):
-    return number + 3
+from advent_of_code_explainer.puzzles.each_day import EachDay
 
 
-def solve_two(number):
-    return number + 4
+class Today(EachDay):
+    @staticmethod
+    def solve_one(number):
+        return number + 3
+
+    @staticmethod
+    def solve_two(number):
+        return number + 4

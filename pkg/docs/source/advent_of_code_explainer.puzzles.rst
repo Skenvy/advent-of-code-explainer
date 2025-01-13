@@ -14,3 +14,11 @@ Subpackages
 
    advent_of_code_explainer.puzzles.year_2023
    advent_of_code_explainer.puzzles.year_2024
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   advent_of_code_explainer.puzzles.each_day
