@@ -1,0 +1,3 @@
+[submodule "web/content/test"]
+	path = web/content/tests/base
+	url = git@github.com:pyscript/upytest.git
