@@ -37,19 +37,18 @@
       
     </header>
     <p>This is an example article that demonstrates the <code>&lt;div&gt;</code> box, as well as the pyscript metadata on the article. All this will do is add one to the number in the box.</p>
-<!-- TODO confirm that these relative src paths that work locally are ok once merge in gh-pages under a subdir -->
-
 <div style="border: 2px solid black;padding: 10px;">
   <h1>Pyscript Test: AOCE</h1>
   <p>Run AOCE function</p>
   <input type="text" id="input_number" placeholder="Type number here..." />
-  <button py-click="do_a_thing">Get next value</button>
+  <button id="do_a_thing_button" py-click="do_a_thing">Get next value</button>
   <div id="output_number"></div>
   <script type="py" src="../../scripts/example/example.py" config="../../scripts/pyscript.toml"></script>
+  <script type="py" src="../../tests/main.py" config="../../tests/pyscript.toml" terminal></script> <!-- Not allowed, can only use one config on page -->
 </div>
     <footer>
       <p>Published: <time datetime="1970-01-02T00:00:00+00:00">
-        Fri 02 January 1970
+        1970-01-02
       </time></p>
         <address>
           By             <a href="https://skenvy.github.io/advent-of-code-explainer/web/author/skenvy.html">Skenvy</a>

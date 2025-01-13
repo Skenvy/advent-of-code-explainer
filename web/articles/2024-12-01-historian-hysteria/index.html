@@ -15,6 +15,8 @@
 
 
 
+        <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+      <script async type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
   </head>
 
   <body>
@@ -35,9 +37,17 @@
       
     </header>
     <p><a href="https://adventofcode.com/2024/day/1">Link to AoC</a>.</p>
+<div style="border: 2px solid black;padding: 10px;">
+  <h1>Pyscript Test: AOCE</h1>
+  <p>Run AOCE function</p>
+  <input type="text" id="input_number" placeholder="Type number here..." />
+  <button py-click="do_a_thing">Get next value</button>
+  <div id="output_number"></div>
+  <script type="py" src="../../scripts/2024/1.py" config="../../scripts/pyscript.toml"></script>
+</div>
     <footer>
       <p>Published: <time datetime="2024-12-01T00:00:00+00:00">
-        Sun 01 December 2024
+        2024-12-01
       </time></p>
         <address>
           By             <a href="https://skenvy.github.io/advent-of-code-explainer/web/author/skenvy.html">Skenvy</a>
